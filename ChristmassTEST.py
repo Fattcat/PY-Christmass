@@ -21,7 +21,7 @@ screen.set_colorkey(transparent_color)
 # Načítanie GIFu s transparentnou farbou
 gif = pygame.image.load('Christmass.gif').convert_alpha()
 original_gif_rect = gif.get_rect()
-gif = pygame.transform.scale(gif, (100, 100))  # Prispôsobte veľkosť podľa potreby
+gif = pygame.transform.scale(gif, (200, 200))  # Prispôsobte veľkosť podľa potreby
 
 # Počiatočné pozície a rýchlosť gifu
 x = random.randint(0, screen_width - gif.get_width())
