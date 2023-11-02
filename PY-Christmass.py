@@ -13,7 +13,13 @@ StartTime = time.time()
 MaxTime = 10
 # ----------
 
+Song = "RickRollAudio.mp3"
+
 # Inicializujeme Pygame
+
+pygame.mixer.init()
+
+pygame.mixer.music.load(Song)
 pygame.init()
 
 
