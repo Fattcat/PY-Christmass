@@ -2,7 +2,16 @@ import pygame
 import random
 import os
 import pyautogui
+import time
 from PIL import ImageGrab  # Pridaná knižnica pre screenshot
+
+# Startnutie casovaca
+StartTime = time.time()
+
+# Nastavenie casu ktorý keď sa napočíta, tak sa script VYPNE
+# ---------- (v sekundach)
+MaxTime = 10
+# ----------
 
 # Inicializujeme Pygame
 pygame.init()
@@ -38,9 +47,9 @@ transparent_color = (0, 0, 0)
 screen.set_colorkey(transparent_color)
 
 # Načítanie GIFu s transparentnou farbou
-gif = pygame.image.load('Christmass01.gif').convert_alpha()
+gif = pygame.image.load('Christmass01.jpg').convert_alpha()
 original_gif_rect = gif.get_rect()
-gif = pygame.transform.scale(gif, (200, 200))  # Prispôsobte veľkosť podľa potreby
+gif = pygame.transform.scale(gif, (290, 290))  # Prispôsobte veľkosť podľa potreby
 
 # Počiatočné pozície a rýchlosť gifu
 x = random.randint(0, screen_width - gif.get_width())
@@ -50,10 +59,17 @@ dy = 1
 
 # Hlavná slučka
 running = True
+
 clock = pygame.time.Clock()
 frame_delay = 60  # oneskorenie medzi snímkami (v milisekundách)
 
 while running:
+    
+    CurrentTime = time.time()
+    ElapsedTime = CurrentTime - StartTime
+    if ElapsedTime >= MaxTime:
+        break
+    
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
