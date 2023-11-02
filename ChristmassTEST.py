@@ -1,45 +1,65 @@
 import pygame
-import sys
+import random
+import os
+import pyautogui
 
 # Inicializujeme Pygame
 pygame.init()
 
-# Nastavíme veľkosť obrazovky na aktuálnu veľkosť obrazovky
-screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
-width, height = screen.get_size()
+# Rozmery obrazovky
+screen_width = 900
+screen_height = 600
 
-# Nastavíme transparentné pozadie
-screen.fill((0, 0, 0))
-screen.set_colorkey((0, 0, 0))
+# Vytvorenie okna bez okrajov a pozadia
+screen = pygame.display.set_mode((screen_width, screen_height), pygame.NOFRAME)
+pygame.display.set_caption('Moving GIF')
 
-# Načítame GIF súbor
-gif = pygame.image.load("ChristmassGIF.gif")
+# Nastavenie transparentnej farby pozadia
+transparent_color = (0, 0, 0)
+screen.set_colorkey(transparent_color)
 
-# Počiatočná pozícia a rýchlosť
-x, y = width // 2, height // 2
-speed_x, speed_y = 5, 5
+# Načítanie GIFu s transparentnou farbou
+gif = pygame.image.load('Christmass.gif').convert_alpha()
+original_gif_rect = gif.get_rect()
+gif = pygame.transform.scale(gif, (100, 100))  # Prispôsobte veľkosť podľa potreby
 
-while True:
+# Počiatočné pozície a rýchlosť gifu
+x = random.randint(0, screen_width - gif.get_width())
+y = random.randint(0, screen_height - gif.get_height())
+dx = 1
+dy = 1
+
+# Hlavná slučka
+running = True
+clock = pygame.time.Clock()
+frame_delay = 60  # oneskorenie medzi snímkami (v milisekundách)
+
+while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            pygame.quit()
-            sys.exit()
+            running = False
 
-    # Pohyb gifu
-    x += speed_x
-    y += speed_y
+    # Pohyb gifu na mieste (posúvanie)
+    x += dx
+    y += dy
 
-    # Odrážanie od okrajov obrazovky
-    if x < 0 or x + gif.get_width() > width:
-        speed_x = -speed_x
-    if y < 0 or y + gif.get_height() > height:
-        speed_y = -speed_y
+    # Odbíjanie od stien obrazovky
+    if x <= 0 or x >= screen_width - gif.get_width():
+        dx = -dx
+    if y <= 0 or y >= screen_height - gif.get_height():
+        dy = -dy
 
-    # Znovu vyplníme obrazovku transparentným pozadím
-    screen.fill((0, 0, 0))
-    
+    # Vymazanie predchádzajúceho snímku
+    screen.fill(transparent_color)
+
     # Zobrazenie gifu na aktuálnej pozícii
     screen.blit(gif, (x, y))
-    
-    # Zobrazíme na obrazovku
-    pygame.display.flip()
+
+    # Aktualizácia obrazovky
+    pygame.display.update()
+
+    # Odstávka na simuláciu pohybu
+    clock.tick(frame_delay)
+
+# Ukončenie Pygame
+pygame.quit()
