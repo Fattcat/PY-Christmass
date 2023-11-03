@@ -11,10 +11,10 @@ StartTime = time.time()
 
 # Nastavenie casu ktorý keď sa napočíta, tak sa script VYPNE
 # ---------- (v sekundach)
-MaxTime = 10
+MaxTime = 30
 # ----------
 
-Song = "RickRollAudio.mp3"
+Song = "ChristmassSONG.mp3"
 
 # Inicializujeme Pygame
 pygame.init()
