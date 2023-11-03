@@ -4,6 +4,7 @@ import os
 import pyautogui
 import time
 from PIL import ImageGrab  # Pridaná knižnica pre screenshot
+import keyboard
 
 # Startnutie casovaca
 StartTime = time.time()
@@ -16,12 +17,10 @@ MaxTime = 10
 Song = "RickRollAudio.mp3"
 
 # Inicializujeme Pygame
-
-pygame.mixer.init()
-
-pygame.mixer.music.load(Song)
 pygame.init()
-
+pygame.mixer.init()
+pygame.mixer.music.load(Song)
+pygame.mixer.music.play()
 
 # ----------------------------------
 #
@@ -101,6 +100,7 @@ while running:
 
     # Odstávka na simuláciu pohybu
     clock.tick(frame_delay)
-
-# Ukončenie Pygame
+    if keyboard.is_pressed("f7"):
+        break
+        # Ukončenie Pygame
 pygame.quit()
